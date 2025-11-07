@@ -33,12 +33,13 @@ public class ProjectController {
     @GetMapping
     public List<ProjectDTO> searchProjects(
         @RequestParam(required = false) String theme,
-        @RequestParam(required = false) Double budget,
+        @RequestParam(required = false) Double budgetMin,
+        @RequestParam(required = false) Double budgetMax,
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deliveryDate,
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deliveryDateAfter,
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deliveryDateBefore
     ) {
-        List<Project> projects = service.searchProjects(theme, budget, deliveryDate, deliveryDateAfter, deliveryDateBefore);
+        List<Project> projects = service.searchProjects(theme, budgetMin, budgetMax, deliveryDate, deliveryDateAfter, deliveryDateBefore);
         return projects.stream()
                        .map(mapper::toDTO)
                        .collect(Collectors.toList());

@@ -52,11 +52,12 @@ public class ProjectService {
 
     // Rechercher des projets avec filtres
     public List<Project> searchProjects(String theme,
-    Double budget,
+    Double budgetMin,
+    Double budgetMax,
     LocalDate deliveryDate,
     LocalDate deliveryDateAfter,
     LocalDate deliveryDateBefore) {
-        return projectRepository.findByFilters(theme, budget, deliveryDate, deliveryDateAfter, deliveryDateBefore);
+        return projectRepository.findByFilters(theme, budgetMin, budgetMax, deliveryDate, deliveryDateAfter, deliveryDateBefore);
     }
 
     // Récupérer un projet par ID
