@@ -5,7 +5,7 @@ INSERT INTO project_owner (id, name) VALUES
 (4, 'David Moreau'),
 (5, 'Emma Lefevre');
 
-INSERT INTO developer (id, name, decription, technologies, experience) VALUES
+INSERT INTO developer (id, name, description, technologies, experience) VALUES
 (1, 'Jean Dupont', 'Développeur backend', 'Java, Spring', 5),
 (2, 'Sophie Bernard', 'Développeuse fullstack', 'JavaScript, React, Spring', 4),
 (3, 'Marc Leroy', 'Développeur frontend', 'Angular, HTML, CSS', 3),

@@ -1,33 +1,19 @@
-package fr.m2i.cda.ecfspring.entity;
+package fr.m2i.cda.ecfspring.controller.dto;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-
-@Entity
-public class Developer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+public class DeveloperDTO {
+ private Integer id;
     private String name;
     private String description;
     private String technologies;
     private Integer experience;
 
-    @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL)
-    private List<Application> applications;
-
+    // Getters et setters
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -61,13 +47,4 @@ public class Developer {
     public void setExperience(Integer experience) {
         this.experience = experience;
     }
-
-    public List<Application> getApplications() {
-        return applications;
-    }
-
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
-    }
-
 }

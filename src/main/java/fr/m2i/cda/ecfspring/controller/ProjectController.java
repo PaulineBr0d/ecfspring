@@ -5,21 +5,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import fr.m2i.cda.ecfspring.controller.dto.mapper.ProjectMapper;
-import fr.m2i.cda.ecfspring.controller.dto.CreateProjectDTO;
 import fr.m2i.cda.ecfspring.controller.dto.ProjectDTO;
 import fr.m2i.cda.ecfspring.entity.Project;
-import fr.m2i.cda.ecfspring.entity.ProjectOwner;
 import fr.m2i.cda.ecfspring.service.ProjectService;
 
 
@@ -35,39 +29,16 @@ public class ProjectController {
         this.mapper = mapper;
     }
 
-
-    // Créer un projet
-     @PostMapping
-    public ProjectDTO createProject(@RequestBody CreateProjectDTO dto) {
-        // Vérifier que le nom du ProjectOwner est fourni
-        if (dto.getProjectOwnerName() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Project owner name must be provided");
-        }
-
-        // Récupérer le ProjectOwner par son nom
-        ProjectOwner projectOwner = service.getProjectOwnerByName(dto.getProjectOwnerName());
-
-        // Convertir le DTO en entité Project
-        Project project = mapper.toEntity(dto);
-
-        // Assigner le ProjectOwner récupéré
-        project.setProjectOwner(projectOwner);
-
-        // Sauvegarder le projet
-        Project savedProject = service.createProject(project);
-
-        // Convertir l'entité en DTO et retourner
-        return mapper.toDTO(savedProject);
-    }
-
-    // Rechercher des projets
+    // Rechercher des projets avec filtre
     @GetMapping
     public List<ProjectDTO> searchProjects(
         @RequestParam(required = false) String theme,
         @RequestParam(required = false) Double budget,
-        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deliveryDate
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deliveryDate,
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deliveryDateAfter,
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate deliveryDateBefore
     ) {
-        List<Project> projects = service.searchProjects(theme, budget, deliveryDate);
+        List<Project> projects = service.searchProjects(theme, budget, deliveryDate, deliveryDateAfter, deliveryDateBefore);
         return projects.stream()
                        .map(mapper::toDTO)
                        .collect(Collectors.toList());
