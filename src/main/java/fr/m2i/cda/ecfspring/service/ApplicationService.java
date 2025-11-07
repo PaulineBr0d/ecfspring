@@ -22,7 +22,7 @@ public class ApplicationService {
     }
 
     public List<ApplicationDTO> listApplicationsByOwner(Integer ownerId) {
-        return applicationRepository.findByProject_ProjectOwner_Id(ownerId)
+        return applicationRepository.findByProjectOwner_Id(ownerId)
                                     .stream()
                                     .map(applicationMapper::toDTO)
                                     .collect(Collectors.toList());

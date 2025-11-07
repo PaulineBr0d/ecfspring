@@ -40,7 +40,7 @@ public class ProjectOwnerService {
     }
 
     public List<ApplicationDTO> listApplications(Integer ownerId) {
-        List<Application> applications = applicationRepository.findByProject_ProjectOwner_Id(ownerId);
+        List<Application> applications = applicationRepository.findByProjectOwner_Id(ownerId);
         return applications.stream()
                 .map(applicationMapper::toDTO)
                 .collect(Collectors.toList());
