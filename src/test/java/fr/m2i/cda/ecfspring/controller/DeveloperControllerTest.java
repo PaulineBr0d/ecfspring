@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import jakarta.transaction.Transactional;
 
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -32,7 +31,13 @@ public class DeveloperControllerTest {
                 .andExpect(jsonPath("$.name").value("Jean Dupont"))
                 .andExpect(jsonPath("$.technologies").value("Java, Spring"));
     }
-
+    
+    @Test
+    void testGetProfile_shouldReturnNotFoundWhenDeveloperDoesNotExist() throws Exception {
+                mvc.perform(get("/api/developer/999"))
+                .andExpect(status().isNotFound());
+    }
+   
     @Test
     void testUpdateProfile() throws Exception {
         String json = """

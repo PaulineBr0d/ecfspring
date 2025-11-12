@@ -27,5 +27,7 @@ INSERT INTO application (id, submission_date, status, developer_id, project_id) 
 (3, '2025-10-05', 'Rejected', 3, 3),
 (4, '2025-10-07', 'Pending', 4, 4),
 (5, '2025-10-09', 'Accepted', 5, 5);
-ALTER TABLE application ALTER COLUMN id RESTART WITH 6;
-ALTER TABLE project ALTER COLUMN id RESTART WITH 6;
+
+
+/*ALTER TABLE application ALTER COLUMN id RESTART WITH 6;
+ALTER TABLE project ALTER COLUMN id RESTART WITH 6;*/

@@ -47,9 +47,7 @@ public class DeveloperService {
 
     // Lister les candidatures d’un développeur
     public List<ApplicationDTO> listApplications(Integer developerId) {
-        Developer developer = developerRepository.findById(developerId)
-                .orElseThrow(() -> new RuntimeException("Developer not found"));
-
+        if (developerId == null) throw new IllegalArgumentException("developerId cannot be null");
         List<Application> applications = applicationRepository.findByDeveloper_Id(developerId);
 
         return applications.stream()
