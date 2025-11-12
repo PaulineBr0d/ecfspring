@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import fr.m2i.cda.ecfspring.controller.dto.ApplicationDTO;
 import fr.m2i.cda.ecfspring.controller.dto.DeveloperDTO;
@@ -65,7 +66,7 @@ public class DeveloperController {
     @GetMapping("/{developerId}")
     public DeveloperDTO getProfile(@PathVariable Integer developerId) {
         Developer developer = developerService.findById(developerId)
-                .orElseThrow(() -> new RuntimeException("Developer not found"));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Developer not found"));
         return developerMapper.toDTO(developer);
     }
 
@@ -73,7 +74,11 @@ public class DeveloperController {
     @DeleteMapping("/{developerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProfile(@PathVariable Integer developerId) {
+        try {
         developerService.deleteDeveloper(developerId);
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+        }
     }
 
 }

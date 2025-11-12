@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import fr.m2i.cda.ecfspring.controller.dto.mapper.ProjectMapper;
 import fr.m2i.cda.ecfspring.controller.dto.ProjectDTO;
@@ -50,7 +52,7 @@ public class ProjectController {
     public ProjectDTO getProject(@PathVariable Integer id) {
         return service.getProjectById(id)
                              .map(mapper::toDTO)
-                             .orElse(null); 
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
     }
 }
 
